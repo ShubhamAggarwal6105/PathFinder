@@ -74,7 +74,8 @@ def solve(maze: Maze, squares, count, positions) -> Solution | None:
         else:
             best_path.extend(partial[1:])
 
-    final_pos.append(('EXIT', 1000))
+    final_pos.append(('EXIT', 136))
+    print(final_pos)
     if best_path:
         return Solution(squares=tuple(best_path), current = final_pos[count][1]), final_pos[count][0]
     else:

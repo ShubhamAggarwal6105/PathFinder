@@ -20,8 +20,90 @@ def generate_path(request):
         
         # items = [{'id': 'pulses-1', 'name': 'All-purpose Flour (2 lbs)', 'quantity': 1}, {'id': 'spices-2', 'name': 'Granulated Sugar (1kg)', 'quantity': 1}, {'id': 'dairy-1', 'name': 'Eggs (1 dozen) ', 'quantity': 1}, {'id': 'dairy-4', 'name': 'Organic Butter (1 lb)', 'quantity': 1}, {'id': 'snacks-7', 'name': "Hershey's Milk Chocolate", 'quantity': 1}, {'id': 'packaged-5', 'name': 'Great Value baking powder ', 'quantity': 1}, {'id': 'canned-2', 'name': 'Watkins Vanilla Extract', 'quantity': 1}, {'id': 'spices-1', 'name': 'Himalayan Table salt (1kg)', 'quantity': 1}]
 
-        item_map = {"snacks-7": 146, "packaged-5": 111, "dairy-4": 80, "dairy-1": 78, "spices-2": 74, "spices-1": 71, "pulses-1": 107, "canned-2": 106}
-        position_map = {"snacks-7": 163, "packaged-5": 128, "dairy-4": 63, "dairy-1": 61, "spices-2": 57, "spices-1": 54, "pulses-1": 90, "canned-2": 123}
+        # item_map = {"snacks-7": 146, "packaged-5": 111, "dairy-4": 80, "dairy-1": 78, "spices-2": 74, "spices-1": 71, "pulses-1": 107, "canned-2": 106}
+        # position_map = {"snacks-7": 163, "packaged-5": 128, "dairy-4": 63, "dairy-1": 61, "spices-2": 57, "spices-1": 54, "pulses-1": 90, "canned-2": 123}
+
+        # Hard-coded position_map: maps each product ID to its fixed square index
+        position_map: Dict[str, int] = {
+            # Snacks
+            "snacks-1": 162, "snacks-2": 163, "snacks-3": 164, "snacks-4": 165,
+            "snacks-5": 162, "snacks-6": 163, "snacks-7": 164, "snacks-8": 165,
+            # Fruits & Vegetables
+            "fruits-1": 191, "fruits-2": 192, "fruits-3": 193, "fruits-4": 194,
+            "fruits-5": 195, "fruits-6": 196, "fruits-7": 197, "fruits-8": 198,
+            # Beverages
+            "beverages-1": 157, "beverages-2": 158, "beverages-3": 159, "beverages-4": 160,
+            # Packaged Food
+            "packaged-1": 128, "packaged-2": 129, "packaged-3": 130, "packaged-4": 131,
+            "packaged-5": 128, "packaged-6": 129, "packaged-7": 130, "packaged-8": 131,
+            # Canned Food
+            "canned-1": 123, "canned-2": 124, "canned-3": 125, "canned-4": 126,
+            # Pulses & Grains
+            "pulses-1": 89, "pulses-2": 90, "pulses-3": 91, "pulses-4": 92,
+            # Dairy
+            "dairy-1": 60, "dairy-2": 61, "dairy-3": 62, "dairy-4": 63,
+            # Spices
+            "spices-1": 52, "spices-2": 53, "spices-3": 54, "spices-4": 55,
+            # Meat
+            "meat-1": 27, "meat-2": 28, "meat-3": 29, "meat-4": 30,
+            # Frozen Food
+            "frozen-1": 18, "frozen-2": 19, "frozen-3": 20, "frozen-4": 21,
+            # Household
+            "household-1": 222, "household-2": 223, "household-3": 224, "household-4": 225,
+            # Stationary
+            "stationary-1": 230, "stationary-2": 231, "stationary-3": 232, "stationary-4": 233,
+            # Electronics
+            "electronics-1": 257, "electronics-2": 258, "electronics-3": 259, "electronics-4": 260,
+            # Footwear
+            "footwear-1": 264, "footwear-2": 265, "footwear-3": 266, "footwear-4": 267,
+            # Men Clothes
+            "men-clothes-1": 290, "men-clothes-2": 291, "men-clothes-3": 292, "men-clothes-4": 293,
+            # Kids Clothes
+            "kids-clothes-1": 295, "kids-clothes-2": 296, "kids-clothes-3": 297, "kids-clothes-4": 298,
+            # Women Clothes
+            "women-clothes-1": 301, "women-clothes-2": 302, "women-clothes-3": 303, "women-clothes-4": 304,
+        }
+
+        # Hard-coded item_map: each product placed in the cell above its position_map entry
+        item_map: Dict[str, int] = {
+            # Snacks
+            "snacks-1": 162+17, "snacks-2": 163+17, "snacks-3": 164+17, "snacks-4": 165+17,
+            "snacks-5": 162-17, "snacks-6": 163-17, "snacks-7": 164-17, "snacks-8": 165-17,
+            # Fruits & Vegetables
+            "fruits-1": 191-17, "fruits-2": 192-17, "fruits-3": 193-17, "fruits-4": 194-17,
+            "fruits-5": 195-17, "fruits-6": 196-17, "fruits-7": 197-17, "fruits-8": 198-17,
+            # Beverages
+            "beverages-1": 157+17, "beverages-2": 158+17, "beverages-3": 159+17, "beverages-4": 160+17,
+            # Packaged Food
+            "packaged-1": 128-17, "packaged-2": 129-17, "packaged-3": 130-17, "packaged-4": 131-17,
+            "packaged-5": 128+17, "packaged-6": 129+17, "packaged-7": 130+17, "packaged-8": 131+17,
+            # Canned Food
+            "canned-1": 123+17, "canned-2": 124+17, "canned-3": 125+17, "canned-4": 126+17,
+            # Pulses & Grains
+            "pulses-1": 89+17, "pulses-2": 90+17, "pulses-3": 91+17, "pulses-4": 92+17,
+            # Dairy
+            "dairy-1": 60+17, "dairy-2": 61+17, "dairy-3": 62+17, "dairy-4": 63+17,
+            # Spices
+            "spices-1": 52+17, "spices-2": 53+17, "spices-3": 54+17, "spices-4": 55+17,
+            # Meat
+            "meat-1": 27-17, "meat-2": 28-17, "meat-3": 29-17, "meat-4": 30-17,
+            # Frozen Food
+            "frozen-1": 18-17, "frozen-2": 19-17, "frozen-3": 20-17, "frozen-4": 21-17,
+            # Household
+            "household-1": 222-17, "household-2": 223-17, "household-3": 224-17, "household-4": 225-17,
+            # Stationary
+            "stationary-1": 230-17, "stationary-2": 231-17, "stationary-3": 232-17, "stationary-4": 233-17,
+            # Electronics
+            "electronics-1": 257-17, "electronics-2": 258-17, "electronics-3": 259-17, "electronics-4": 260-17,
+            # Footwear
+            "footwear-1": 264-17, "footwear-2": 265-17, "footwear-3": 266-17, "footwear-4": 267-17,
+            # Men Clothes
+            "men-clothes-1": 290-17, "men-clothes-2": 291-17, "men-clothes-3": 292-17, "men-clothes-4": 293-17,
+            # Kids Clothes
+            "kids-clothes-1": 295-17, "kids-clothes-2": 296-17, "kids-clothes-3": 297-17, "kids-clothes-4": 298-17,
+            # Women Clothes
+            "women-clothes-1": 301-17, "women-clothes-2": 302-17, "women-clothes-3": 303-17, "women-clothes-4": 304-17,
+        }
 
         # Create the exact same maze from tutorial.py
         maze = Maze(
